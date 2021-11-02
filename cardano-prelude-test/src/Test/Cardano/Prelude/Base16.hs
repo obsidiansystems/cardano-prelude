@@ -89,10 +89,20 @@ chunkBS n xs = case LB.uncons xs of
 decodeBase16 :: LB.ByteString -> Maybe LB.ByteString
 decodeBase16 bs
   | -- No complex parsing is required for data whose length is <= 32.
-    LB.length bs <= lineWrapLength = either (const Nothing) Just (B16.decode bs)
+    -- Note: Changes made to be compatible with older versions of base16-bytestring
+    -- LB.length bs <= lineWrapLength = either (const Nothing) Just (B16.decode bs)
+    LB.length bs <= lineWrapLength = if LB.length (snd $ B16.decode bs) > 0
+      then Nothing
+      else Just (fst $ B16.decode bs)
   | otherwise = case PLB.maybeResult $ PLB.parse decodeParser bs of
     Nothing -> Nothing
-    Just r  -> either (const Nothing) Just (B16.decode (LB.fromStrict (BC.concat r)))
+    -- Note: Changes made to be compatible with older versions of base16-bytestring
+    -- Just r  -> either (const Nothing) Just (B16.decode (LB.fromStrict (BC.concat r)))
+    Just r  -> do
+      let nxtChunk = B16.decode (LB.fromStrict (BC.concat r))
+      if LB.length (snd nxtChunk) > 0
+        then Nothing
+        else Just $ fst nxtChunk
 
 -- | Parser for several lines of data encoded using 'encode' or
 -- 'encodeWithIndex'.
