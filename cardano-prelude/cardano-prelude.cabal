@@ -60,10 +60,7 @@ library
                       cbits/closure_size.c
   ghc-options:        -Weverything
                       -fno-warn-all-missed-specialisations
-                      -fno-warn-missing-deriving-strategies
                       -fno-warn-missing-import-lists
-                      -fno-warn-missing-safe-haskell-mode
-                      -fno-warn-prepositive-qualified-module
                       -fno-warn-safe
                       -fno-warn-unsafe
   cc-options:         -Wall

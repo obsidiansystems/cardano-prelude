@@ -51,10 +51,7 @@ library
   default-extensions: NoImplicitPrelude
   ghc-options:        -Weverything
                       -fno-warn-all-missed-specialisations
-                      -fno-warn-missing-deriving-strategies
                       -fno-warn-missing-import-lists
-                      -fno-warn-missing-safe-haskell-mode
-                      -fno-warn-prepositive-qualified-module
                       -fno-warn-safe
                       -fno-warn-unsafe
 
@@ -85,9 +82,6 @@ test-suite cardano-prelude-test-suite
                       -fno-warn-safe
                       -threaded
                       -rtsopts
-                      -fno-warn-missing-deriving-strategies
-                      -fno-warn-missing-safe-haskell-mode
-                      -fno-warn-prepositive-qualified-module
 
   if (!flag(development))
     ghc-options:      -Werror
